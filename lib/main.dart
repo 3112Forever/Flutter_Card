@@ -1,231 +1,276 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: new MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  Animation cardAnimation, delayedCardAnimation, fabButtonanim, infoAnimation;
-  AnimationController controller;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller =
-        AnimationController(duration: Duration(seconds: 2), vsync: this);
-
-    cardAnimation = Tween(begin: 0.0, end: -0.025).animate(
-        CurvedAnimation(curve: Curves.fastOutSlowIn, parent: controller));
-
-    delayedCardAnimation = Tween(begin: 0.0, end: -0.05).animate(
-        CurvedAnimation(
-            curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn),
-            parent: controller));
-
-    fabButtonanim = Tween(begin: 1.0, end: -0.0008).animate(CurvedAnimation(
-        curve: Interval(0.8, 1.0, curve: Curves.fastOutSlowIn),
-        parent: controller));
-
-    infoAnimation = Tween(begin: 0.0, end: 0.025).animate(CurvedAnimation(
-        curve: Interval(0.7, 1.0, curve: Curves.fastOutSlowIn),
-        parent: controller));
-  }
-
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    final devHeight = MediaQuery.of(context).size.height;
-    controller.forward();
-    return new AnimatedBuilder(
-        animation: controller,
-        builder: (BuildContext context, Widget child) {
-          return Scaffold(
-            appBar: new AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0.0,
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios),
-                color: Colors.black,
-                onPressed: () {},
-              ),
-              title: new Text('Near by',
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
-              actions: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.network('https://images-na.ssl-images-amazon.com/images/I/51zLZbEVSTL._SY355_.jpg'),
-                ),
-                /*Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: FlutterLogo(colors: Colors.blue, size: 40.0),
-                )*/
-              ],
-            ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 40.0),
-                    child: Stack(
-                      overflow: Overflow.visible,
-                      children: <Widget>[
-                        Positioned(
-                          left: 20.0,
-                          child: Container(
-                            transform: Matrix4.translationValues(0.0, delayedCardAnimation.value * devHeight, 0.0),
-                            width: 260.0,
-                            height: 400.0,
-                            decoration: BoxDecoration(
-                                color: Colors.amber,
-                                borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                        ),
-                        Positioned(
+    return new Scaffold(
+      appBar: new AppBar(
+        /*title: new FlutterLogo(
+          colors: Colors.red,
+          size: 25.0,
+        ),*/
 
-                          left: 10.0,
-                          child: Container(
-                            transform: Matrix4.translationValues(0.0, cardAnimation.value * devHeight, 0.0),
-                            width: 280.0,
-                            height: 400.0,
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(10.0)),
-                          ),
-                        ),
+        title: Image.network(
+            'https://cdn3.iconfinder.com/data/icons/facebook-ui-flat/48/Facebook_UI-07-512.png'),
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.red), onPressed: () {}),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.menu, color: Colors.redAccent), onPressed: null)
+        ],
+
+        //  Icon(Icons.keyboard_arrow_left,color: Colors.redAccent),
+      ),
+      body: new ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              Container(
+                alignment: Alignment(0.0, -0.40),
+                color: Colors.white,
+                height: 100.0,
+                child: new Text('Get Shopping',
+                    style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold)),
+              ),
+
+              // Stack Start
+              Container(
+                margin: EdgeInsets.fromLTRB(25.0, 80.0, 25.0, 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 2.0,
+                        color: Color(0xFFFBE9E7),
+                      ),
+                    ]),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        // Start Left Side text
+
                         Container(
-                          width: 300.0,
-                          height: 400.0,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: DecorationImage(
-                                  image: AssetImage('assets/girls.jpeg'),
-                                  fit: BoxFit.cover)),
-                        ),
-                        Positioned(
-                          top: 320.0,
-                          left: 15.0,
-                          child: Container(
-                            transform: Matrix4.translationValues(0.0, infoAnimation.value * devHeight, 0.0),
-                            width: 270.0,
-                            height: 90.0,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      blurRadius: 1.0,
-                                      color: Colors.black12,
-                                      spreadRadius: 2.0)
-                                ]),
-                            child: Container(
-                              padding: EdgeInsets.all(7.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        '3112',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 20.0),
-                                      ),
-                                      SizedBox(width: 4.0),
-                                      Image.asset(
-                                        'assets/simbolo.png',
-                                        height: 20.0,
-                                        width: 20.0,
-                                      ),
-                                      SizedBox(width: 110.0),
-                                      Text(
-                                        '5.8km',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 20.0,
-                                            color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 9.0),
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        'This is Card.',
-                                        style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 15.0,
-                                            color: Colors.grey),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+                          padding: EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
+                          child: Text(
+                            'You Have Save',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'Montserrat',
+                                fontSize: 14.0),
                           ),
-                        )
+                        ),
+
+                        Container(
+                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
+                          child: Text(
+                            '250',
+                            style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'Montserrat',
+                                fontSize: 32.0),
+                          ),
+                        ),
                       ],
-                    )),
-                Container(
-                  transform: Matrix4.translationValues(0.0, fabButtonanim.value * devHeight, 0.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      FloatingActionButton(
-                        elevation: 0.0,
-                        onPressed: () {},
-                        child: Icon(Icons.close, color: Colors.black),
-                        backgroundColor: Colors.white,
-                      ),
-                      Container(
-                        height: 70.0,
-                        width: 70.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(35.0),
-                          border: Border.all(
-                              color: Colors.transparent,
-                              style: BorderStyle.solid,
-                              width: 2.0),
-                        ),
-                        child: Container(
-                          child: Center(
-                            child: IconButton(
-                              icon: Image.asset('assets/chatbubble.png'),
-                              color: Colors.lightBlueAccent[300],
-                              onPressed: () {},
-                            ),
-                          ),
+                    ),
+                    SizedBox(width: 70.0),
+                    Container(
+                      height: 50.0,
+                      width: 150.0,
+                      decoration: BoxDecoration(
+                          color: Color(0xFFFF8A80),
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Center(
+                        child: new Text(
+                          'BUY NOW',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500),
                         ),
                       ),
-                      FloatingActionButton(
-                        elevation: 0.0,
-                        onPressed: () {},
-                        child: Icon(Icons.favorite, color: Colors.pink),
-                        backgroundColor: Colors.white,
-                      )
-                    ],
-                  ),
-                )
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+
+          // Main Stack text close
+
+          SizedBox(height: 40.0),
+          Container(
+            padding: EdgeInsets.only(right: 25.0, left: 25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                // Title 1
+
+                Text(
+                  'Product Name',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600),
+                ),
+
+                // Title 1 End
+
+                Text(
+                  'View All',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600),
+                ),
+
+
               ],
             ),
-          );
-        });
+          ),
+
+
+          // Gridview Used And Create Product Use
+
+          SizedBox(height: 15.0),
+          
+          GridView.count(
+            crossAxisCount: 2,
+            mainAxisSpacing: 4.0, // Used By Bottom Spacing
+            crossAxisSpacing: 2.0, // Used By Right Spacing
+            shrinkWrap: true,
+
+            // Card
+
+            children: <Widget>[
+                _buildCard('Tom', 'Available', 1),
+                _buildCard('Tom', 'Away', 2),
+                _buildCard('Tom', 'Away', 3),
+                _buildCard('Tom', 'Available', 4),
+                _buildCard('Tom', 'Away', 5),
+                _buildCard('Tom', 'Available', 6),
+            ],
+          )
+
+
+        ],
+      ),
+    );
+  }
+
+  // Custom Widget
+
+  Widget _buildCard(String name, String status, int cardIndex) {
+    return Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+        ),
+        elevation: 7.0,
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 12.0),
+            Stack(
+                children: <Widget>[
+                  Container(
+                    height: 60.0,
+                    width: 60.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: Colors.green,
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                'https://pixel.nymag.com/imgs/daily/vulture/2017/06/14/14-tom-cruise.w700.h700.jpg'
+                            )
+                        )
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 40.0),
+                    height: 20.0,
+                    width: 20.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        color: status == 'Away' ? Colors.amber : Colors.green,
+                        border: Border.all(
+                            color: Colors.white,
+                            style: BorderStyle.solid,
+                            width: 2.0
+                        )
+                    ),
+                  )
+                ]),
+            SizedBox(height: 8.0),
+            Text(
+              name,
+              style: TextStyle(
+                fontFamily: 'Quicksand',
+                fontWeight: FontWeight.bold,
+                fontSize: 15.0,
+              ),
+            ),
+            SizedBox(height: 5.0),
+            Text(
+              status,
+              style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12.0,
+                  color: Colors.grey
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Expanded(
+                child: Container(
+                    width: 175.0,
+                    decoration: BoxDecoration(
+                      color: status == 'Away' ? Colors.grey: Colors.green,
+                      borderRadius: BorderRadius.only
+                        (
+                          bottomLeft: Radius.circular(10.0),
+                          bottomRight: Radius.circular(10.0)
+                      ),
+                    ),
+                    child: Center(
+                      child: Text('Request',
+                        style: TextStyle(
+                            color: Colors.white, fontFamily: 'Quicksand'
+                        ),
+                      ),
+                    )
+                )
+            )
+          ],
+        ),
+        margin: cardIndex.isEven? EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0):EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)
+    );
   }
 }
